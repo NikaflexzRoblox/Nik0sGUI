@@ -1,0 +1,116 @@
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Nik0's Gui", "Sentinel")
+-- MAIN
+local Tab = Window:NewTab("Customise")
+local Tab2 = Window:NewTab("Murder Mystery")
+local Section = Tab:NewSection("Customise your character")
+local WindowCustom = Tab:NewSection("Customise Window")
+local Notifier = Tab2:NewSection("Notifier")
+local Section3 = Tab2:NewSection("Murderer")
+Section:NewButton("Blocky Accessories", "Block accessories", function(state)
+        for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if v:IsA("Accessory") then
+                if v.Handle:FindFirstChild("SpecialMesh") then
+                    v.Handle.SpecialMesh:Destroy()
+                elseif v.Handle:FindFirstChild("Mesh") then
+                    v.Handle.Mesh:Destroy()
+                end
+            end
+        end
+end)
+Section:NewButton("Get rid of accessories","Gets rid of any accessory",function()
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if v:IsA("Accessory") then
+                if v.Handle:FindFirstChild("AccessoryWeld") then
+                    v.Handle.AccessoryWeld:Destroy()
+                end
+            end
+        end
+end)
+
+Section:NewButton("Get rid of face","Gets rid of your face",function()
+    game.Players.LocalPlayer.Character.Head.face:Destroy()
+end)
+Section:NewSlider("WalkSpeed","...",100,16,function(speed)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = speed
+end)
+Section:NewSlider("JumpHeight","...",50,7.2,function(speed)
+    game.Players.LocalPlayer.Character.Humanoid.JumpHeight = speed
+end)
+Section:NewButton("Reset JumpHeight & WalkSpeed","Resets your changes",function()
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+    game.Players.LocalPlayer.Character.Humanoid.JumpHeight = 7.2
+end)
+Section:NewButton("Become invisible","Makes every single of your body invisible.",function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NikaflexzRoblox/Ivisiblescriptroblox2/main/Invisiblescript"))()
+end)
+Section:NewButton("No legs","Removes your legs",function()
+    local leftleg = game.Players.LocalPlayer.Character:FindFirstChild("LeftUpperLeg")
+    local rightleg = game.Players.LocalPlayer.Character:FindFirstChild("RightUpperLeg")
+    if leftleg and rightleg then
+        leftleg:Destroy()
+        rightleg:Destroy()
+    else
+        local leftleg = game.Players.LocalPlayer.Character:FindFirstChild("Left Leg")
+        local rightleg = game.Players.LocalPlayer.Character:FindFirstChild("Right Leg")
+        leftleg:Destroy()
+        rightleg:Destroy()
+    end
+end)
+Section:NewButton("No arms","Removes your arms",function()
+    local leftarm = game.Players.LocalPlayer.Character:FindFirstChild("LeftUpperArm")
+    local rightarm = game.Players.LocalPlayer.Character:FindFirstChild("RightUpperArm")
+    if leftarm and rightarm then
+        leftarm:Destroy()
+        rightarm:Destroy()
+    else
+        local leftarm = game.Players.LocalPlayer.Character:FindFirstChild("Left Arm")
+        local rightarm = game.Players.LocalPlayer.Character:FindFirstChild("Right Arm")
+        leftarm:Destroy()
+        rightarm:Destroy()
+    end
+end)
+Notifier:NewButton("Murder notifier","Notifies you a murders name",function()
+    for i,v in pairs(game.Players:GetChildren()) do
+        if v.Character:FindFirstChild("Knife") or v.Backpack:FindFirstChild("Knife") then
+            game:GetService("StarterGui"):SetCore("SendNotification",{
+            Title = "Murder Notifier", -- Required
+            Text = v.Name,
+            Icon = "rbxassetid://1234567890" -- Optional
+            })
+        end
+    end
+end)
+Notifier:NewButton("Sherif notifier","Notifies you a sherif user",function()
+    for i,v in pairs(game.Players:GetChildren()) do
+        if v.Character:FindFirstChild("Gun") or v.Backpack:FindFirstChild("Gun") then
+            game:GetService("StarterGui"):SetCore("SendNotification",{
+            Title = "Sherif Notifier", -- Required
+            Text = v.Name,
+            Icon = "rbxassetid://1234567890" -- Optional
+            })
+        end
+    end
+end)
+Section3:NewButton("Shoot the murderer","Shoots the murderer, only if you have the gun",function()
+    local gun = game.Players.LocalPlayer.Character:FindFirstChild("Gun")
+    if gun then
+        print("Has gun")
+        for i,v in pairs(game.Players:GetChildren()) do
+            if v.Character:FindFirstChild("Knife") or v.Backpack:FindFirstChild("Knife") then
+                local cframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame
+
+ 
+                local A_1 = 1
+                local A_2 = v.Character.HumanoidRootPart.Position
+                local A_3 = "AH"
+                local Event = gun.KnifeServer.ShootGun
+                Event:InvokeServer(A_1, A_2, A_3)
+                wait(0.2)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = cframe
+            end
+        end
+    end
+end)
